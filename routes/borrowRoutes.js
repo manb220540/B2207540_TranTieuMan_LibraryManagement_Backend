@@ -1,21 +1,20 @@
 // backend/routes/borrowRoutes.js
 const express = require('express');
 const router = express.Router();
-const borrowController = require('../controllers/borrowController');
-const authenticateToken = require('../middlewares/authMiddleware');
-const restrictTo = require('../middlewares/roleMiddleware');
+const { auth, adminAuth } = require('../middlewares/authMiddleware.js');
+const {
+  getAllBorrowRequests,
+  getReaderBorrowHistory,
+  createBorrowRequest,
+  updateBorrowRequest
+} = require('../controllers/borrowController.js');
 
-// Create borrow request (reader only)
-router.post('/', authenticateToken, restrictTo('reader'), (req, res) => {
-  borrowController.createBorrow(req, res, req.io);
-});
-// Get user borrows (reader only)
-router.get('/', authenticateToken, restrictTo('reader'), borrowController.getUserBorrows);
-// Get all borrows (employee only)
-router.get('/admin', authenticateToken, restrictTo('employee'), borrowController.getAllBorrows);
-// Update borrow status (employee only)
-router.put('/:id', authenticateToken, restrictTo('employee'), (req, res) => {
-  borrowController.updateBorrowStatus(req, res, req.io);
-});
+// Routes cho admin
+router.get('/admin/requests', auth, adminAuth, getAllBorrowRequests);
+router.put('/admin/requests/:id', auth, adminAuth, updateBorrowRequest);
+
+// Routes cho độc giả
+router.get('/history', auth, getReaderBorrowHistory);
+router.post('/request', auth, createBorrowRequest);
 
 module.exports = router;

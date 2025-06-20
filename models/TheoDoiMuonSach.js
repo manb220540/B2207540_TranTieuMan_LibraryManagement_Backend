@@ -1,17 +1,33 @@
 // backend/models/TheoDoiMuonSach.js
 const mongoose = require('mongoose');
 
-const TheoDoiMuonSachSchema = new mongoose.Schema({
-  MaDocGia: { type: String, required: true }, // Reader ID
-  MaSach: { type: String, required: true }, // Book ID
-  NgayMuon: { type: Date, required: true }, // Borrow date
-  NgayTra: { type: Date }, // Return date
-  TrangThai: { 
-    type: String, 
-    enum: ['pending', 'approved', 'rejected', 'returned'], 
-    default: 'pending' 
-  }, // Borrow status
-  SoLuong: { type: Number, required: true, default: 1 }, // Borrowed quantity
+const theoDoiMuonSachSchema = new mongoose.Schema({
+  maDocGia: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'DocGia',
+    required: true
+  },
+  maSach: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Sach',
+    required: true
+  },
+  ngayMuon: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
+  ngayTra: {
+    type: Date
+  },
+  // Thêm trạng thái cho quá trình duyệt
+  trangThai: {
+    type: String,
+    enum: ['Chờ duyệt', 'Đã duyệt', 'Từ chối', 'Đã trả'],
+    default: 'Chờ duyệt'
+  }
+}, {
+  timestamps: true
 });
 
-module.exports = mongoose.model('TheoDoiMuonSach', TheoDoiMuonSachSchema);
+module.exports = mongoose.model('TheoDoiMuonSach', theoDoiMuonSachSchema);

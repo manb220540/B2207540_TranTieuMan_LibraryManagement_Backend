@@ -1,14 +1,39 @@
 // backend/models/Sach.js
 const mongoose = require('mongoose');
 
-const SachSchema = new mongoose.Schema({
-  MaSach: { type: String, unique: true, required: true }, // Unique book ID
-  TenSach: { type: String, required: true }, // Book title
-  DonGia: { type: Number }, // Price
-  SoQuyen: { type: Number, required: true }, // Quantity
-  NamXuatBan: { type: Number }, // Publication year
-  MaNXB: { type: String, required: true }, // Publisher ID
-  NguonGoc: { type: String }, // Origin or author
+const sachSchema = new mongoose.Schema({
+  maSach: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  tenSach: {
+    type: String,
+    required: true
+  },
+  donGia: {
+    type: Number,
+    required: true
+  },
+  soQuyen: {
+    type: Number,
+    required: true
+  },
+  namXuatBan: {
+    type: Number,
+    required: true
+  },
+  maNXB: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'NhaXuatBan',
+    required: true
+  },
+  nguonGoc: {
+    type: String,
+    required: true
+  }
+}, {
+  timestamps: true
 });
 
-module.exports = mongoose.model('Sach', SachSchema);
+module.exports = mongoose.model('Sach', sachSchema);

@@ -1,13 +1,10 @@
 // backend/routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
+const { loginStaff, loginReader, registerReader } = require('../controllers/authController.js');
 
-// Register route
-router.post('/register', authController.register);
-// Email verification route
-router.get('/verify/:token', authController.verifyEmail);
-// Login route
-router.post('/login', authController.login);
+router.post('/staff/login', loginStaff);
+router.post('/reader/login', loginReader);
+router.post('/reader/register', registerReader);
 
 module.exports = router;

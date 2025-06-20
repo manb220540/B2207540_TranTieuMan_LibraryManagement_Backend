@@ -1,10 +1,22 @@
 // backend/models/NhaXuatBan.js
 const mongoose = require('mongoose');
 
-const NhaXuatBanSchema = new mongoose.Schema({
-  MaNXB: { type: String, unique: true, required: true }, // Unique publisher ID
-  TenNXB: { type: String, required: true }, // Publisher name
-  DiaChi: { type: String }, // Publisher address
+const nhaXuatBanSchema = new mongoose.Schema({
+  maNXB: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  tenNXB: {
+    type: String,
+    required: true
+  },
+  diaChi: {
+    type: String,
+    required: true
+  }
+}, {
+  timestamps: true
 });
 
-module.exports = mongoose.model('NhaXuatBan', NhaXuatBanSchema);
+module.exports = mongoose.model('NhaXuatBan', nhaXuatBanSchema);

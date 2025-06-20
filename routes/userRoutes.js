@@ -1,11 +1,20 @@
 // backend/routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
-const authenticateToken = require('../middlewares/authMiddleware');
-const restrictTo = require('../middlewares/roleMiddleware');
+const { auth, adminAuth } = require('../middlewares/authMiddleware.js');
+const {
+  getAllReaders,
+  getReaderById,
+  deleteReader,
+  updateProfile
+} = require('../controllers/userController');
 
-// Get all users (employee only)
-router.get('/', authenticateToken, restrictTo('employee'), userController.getUsers);
+// Routes cho admin
+router.get('/', auth, adminAuth, getAllReaders);
+router.get('/:id', auth, adminAuth, getReaderById);
+router.delete('/:id', auth, adminAuth, deleteReader);
+
+// Routes cho độc giả
+router.put('/profile', auth, updateProfile);
 
 module.exports = router;
