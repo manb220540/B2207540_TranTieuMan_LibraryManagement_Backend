@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const NhanVien = require('../models/NhanVien');
 const DocGia = require('../models/DocGia');
+const { generateOTP, sendVerificationEmail } = require('../config/email');
 
 // Đăng nhập cho nhân viên
 const loginStaff = async (req, res) => {
@@ -62,10 +63,66 @@ const registerReader = async (req, res) => {
   }
 };
 
-
+// Gửi yêu cầu đổi mật khẩu
+const requestPasswordReset = async (req, res) => {
+    try {
+      const { email } = req.body;
+      const docgia = await DocGia.findOne({ email });
+  
+      if (!docgia) {
+        return res.status(404).send({ error: 'Email not found' });
+      }
+  
+      // Generate OTP and store it (e.g., in docgia or a separate collection)
+      const otp = generateOTP();
+      docgia.otp = otp; // Lưu OTP vào model (nên mã hóa hoặc dùng collection riêng)
+      docgia.otpExpiry = Date.now() + 10 * 60 * 1000; // Hiệu lực 10 phút
+      await docgia.save();
+  
+      // Send verification email
+      await sendVerificationEmail(email, otp);
+  
+      res.send({ message: 'Verification email sent. Please check your inbox.' });
+    } catch (error) {
+      res.status(500).send({ error: error.message || 'Failed to request password reset' });
+    }
+  };
+  
+  // Xác nhận OTP và đổi mật khẩu
+  const confirmPasswordReset = async (req, res) => {
+    try {
+      const { email, otp, newPassword } = req.body;
+      const docgia = await DocGia.findOne({ email });
+  
+      console.log(docgia.otp, otp, Date.now(), docgia.otpExpiry);
+        console.log(otp)
+        // Kiểm tra OTP và thời gian hết hạn
+      if (docgia.otp !== otp) {
+        return res.status(400).send({ error: 'Invalid OTP' });
+      }if (Date.now() > docgia.otpExpiry) {
+        return res.status(400).send({ error: 'OTP has expired' });
+      }if (!docgia){
+        return res.status(404).send({ error: 'Email not found' });
+      }
+    
+      
+  
+      // Update password
+      docgia.password = await bcrypt.hash(newPassword, 8);
+      docgia.otp = undefined; // Xóa OTP sau khi xác nhận
+      docgia.otpExpiry = undefined;
+      await docgia.save();
+  
+      res.send({ message: 'Password updated successfully. Redirecting to login.' });
+    } catch (error) {
+      res.status(500).send({ error: error.message || 'Failed to update password' });
+    }
+  };
 
 module.exports = {
   loginStaff,
   loginReader,
-  registerReader
+  registerReader,
+  requestPasswordReset,
+  confirmPasswordReset
 };

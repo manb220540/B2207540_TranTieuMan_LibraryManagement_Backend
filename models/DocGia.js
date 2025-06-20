@@ -40,7 +40,9 @@ const docGiaSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  otp: String, // Mã OTP tạm thời
+  otpExpiry: Date, // Thời gian hết hạn của OTP
 }, {
   timestamps: true
 });

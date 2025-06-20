@@ -31,7 +31,8 @@ const sachSchema = new mongoose.Schema({
   nguonGoc: {
     type: String,
     required: true
-  }
+  },
+    
 }, {
   timestamps: true
 });
