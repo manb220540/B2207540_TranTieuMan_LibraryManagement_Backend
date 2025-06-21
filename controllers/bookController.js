@@ -4,7 +4,9 @@ const Sach = require('../models/Sach');
 // Lấy danh sách tất cả sách
 const getAllBooks = async (req, res) => {
   try {
-    const books = await Sach.find().populate('maNXB');
+    const books = await Sach.find()
+      .populate('maNXB') // Chỉ lấy trường tenNXB
+      .populate('maTacGia'); // Thêm populate cho maTacGia, chỉ lấy tenTacGia
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -55,7 +57,9 @@ const deleteBook = async (req, res) => {
 // Lấy thông tin một sách
 const getBookById = async (req, res) => {
   try {
-    const book = await Sach.findById(req.params.id).populate('maNXB');
+    const book = await Sach.findById(req.params.id)
+      .populate('maNXB') // Chỉ lấy trường tenNXB
+      .populate('maTacGia'); // Thêm populate cho maTacGia, chỉ lấy tenTacGia
     if (!book) {
       return res.status(404).json({ message: 'Không tìm thấy sách' });
     }

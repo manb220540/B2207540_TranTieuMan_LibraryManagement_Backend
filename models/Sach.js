@@ -32,6 +32,11 @@ const sachSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  maTacGia:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TacGia',
+    required: true
+  }
     
 }, {
   timestamps: true
