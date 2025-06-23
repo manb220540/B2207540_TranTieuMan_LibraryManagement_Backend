@@ -11,7 +11,7 @@ const getAllReaders = async (req, res) => {
   }
 };
 
-// Lấy thông tin một độc giả
+// Lấy thông tin một độc giả theo ID (chỉ admin)
 const getReaderById = async (req, res) => {
   try {
     const reader = await DocGia.findById(req.params.id).select('-password');
@@ -65,9 +65,23 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// Lấy thông tin cá nhân của độc giả (đã xác thực)
+const getProfile = async (req, res) => {
+  try {
+    const reader = await DocGia.findById(req.user._id).select('-password');
+    if (!reader) {
+      return res.status(404).json({ message: 'Không tìm thấy độc giả' });
+    }
+    res.json(reader);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllReaders,
   getReaderById,
   deleteReader,
-  updateProfile
+  updateProfile,
+  getProfile
 };

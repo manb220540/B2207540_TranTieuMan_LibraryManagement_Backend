@@ -6,7 +6,8 @@ const {
   getAllReaders,
   getReaderById,
   deleteReader,
-  updateProfile
+  updateProfile,
+  getProfile
 } = require('../controllers/userController');
 
 // Routes cho admin
@@ -16,5 +17,6 @@ router.delete('/:id', auth, adminAuth, deleteReader);
 
 // Routes cho độc giả
 router.put('/profile', auth, updateProfile);
+router.get('/profile', auth, getProfile);
 
 module.exports = router;
