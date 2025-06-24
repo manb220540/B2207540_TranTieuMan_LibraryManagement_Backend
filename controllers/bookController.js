@@ -21,6 +21,7 @@ const createBook = async (req, res) => {
     res.status(201).json(book);
   } catch (error) {
     res.status(400).json({ message: error.message });
+    console.error('Create book error:', error); // Log lỗi để debug
   }
 };
 
@@ -38,6 +39,7 @@ const updateBook = async (req, res) => {
     res.json(book);
   } catch (error) {
     res.status(400).json({ message: error.message });
+    console.error('Update book error:', error); // Log lỗi để debug
   }
 };
 
@@ -51,6 +53,7 @@ const deleteBook = async (req, res) => {
     res.json({ message: 'Xóa sách thành công' });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.error('Delete book error:', error); // Log lỗi để debug
   }
 };
 
@@ -66,6 +69,7 @@ const getBookById = async (req, res) => {
     res.json(book);
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.error('Get book by ID error:', error); // Log lỗi để debug
   }
 };
 
