@@ -24,7 +24,7 @@ const sendVerificationEmail = async (email, otp) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: 'Xác nhận đổi mật khẩu - Thư viện PL',
+    subject: 'Xác nhận đổi mật khẩu - Thư viện TM',
     html: `
       <h3>Xin chào,</h3>
       <p>Chúng tôi đã nhận được yêu cầu đổi mật khẩu cho tài khoản của bạn. Dưới đây là mã xác nhận (OTP) để hoàn tất quá trình:</p>
