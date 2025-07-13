@@ -84,33 +84,4 @@ const updateProfile = async (req, res) => {
     // Trả về thông tin độc giả đã cập nhật
     res.json(readerResponse);
   } catch (error) {
-    // Xử lý lỗi, trả về mã trạng thái 400 (Bad Request) và thông báo lỗi
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Lấy thông tin cá nhân của độc giả (cho độc giả đã xác thực)
-const getProfile = async (req, res) => {
-  try {
-    // Tìm độc giả theo ID từ thông tin người dùng đã xác thực, loại bỏ trường password
-    const reader = await DocGia.findById(req.user._id).select('-password');
-    // Kiểm tra nếu không tìm thấy độc giả
-    if (!reader) {
-      return res.status(404).json({ message: 'Không tìm thấy độc giả' });
-    }
-    // Trả về thông tin độc giả
-    res.json(reader);
-  } catch (error) {
-    // Xử lý lỗi, trả về mã trạng thái 500 (Internal Server Error) và thông báo lỗi
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Xuất các hàm để sử dụng trong file routes
-module.exports = {
-  getAllReaders,
-  getReaderById,
-  deleteReader,
-  updateProfile,
-  getProfile
-};
+  

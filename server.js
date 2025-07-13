@@ -20,6 +20,8 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/sach', sachRoutes);
@@ -29,6 +31,13 @@ app.use('/api/nhanvien', nhanVienRoutes);
 app.use('/api/docgia', docGiaRoutes);
 app.use('/api/tacgia', tacGiaRoutes);
 
+// static (dist)
+app.use(express.static('dist'));
+app.use('/uploads', express.static('uploads'));
+// Serve the frontend application
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/dist/index.html');
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
