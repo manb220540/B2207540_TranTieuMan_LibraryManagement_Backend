@@ -56,12 +56,17 @@ Thực hiện các bước sau để thiết lập dự án backend:
     JWT_SECRET=your_jwt_secret_key_here
     EMAIL_USER=your_email@example.com
     EMAIL_PASS=your_email_app_password_here
+    EMAIL_SERVICE=gmail
+    EMAIL_PORT=587
+    EMAIL_HOST=smtp.gmail.com
     ```
     * `PORT`: Cổng mà server backend sẽ chạy.
     * `MONGODB_URI`: Chuỗi kết nối đến cơ sở dữ liệu MongoDB của bạn.
     * `JWT_SECRET`: Khóa bí mật dùng để ký và xác minh JWT. Nên là một chuỗi ngẫu nhiên, phức tạp và bảo mật.
     * `EMAIL_USER`: Địa chỉ email được sử dụng để gửi mã OTP và các thông báo khác.
     * `EMAIL_PASS`: Mật khẩu ứng dụng (App Password) hoặc mật khẩu của tài khoản email đã cấu hình. (Lưu ý: Không sử dụng mật khẩu tài khoản chính nếu không cần thiết, hãy dùng App Password nếu dịch vụ email của bạn hỗ trợ).
+      
+
 
 ## 4. Chạy dự án
 
