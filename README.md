@@ -51,7 +51,7 @@ Thực hiện các bước sau để thiết lập dự án backend:
     Tạo một file có tên `.env` ở thư mục gốc của dự án backend và cấu hình các biến môi trường cần thiết. Đây là một ví dụ cơ bản (bạn cần thay thế các giá trị bằng thông tin thực tế của mình):
 
     ```env
-    PORT=3000
+    PORT=5000
     MONGODB_URI=mongodb://localhost:27017/library_db
     JWT_SECRET=your_jwt_secret_key_here
     EMAIL_USER=your_email@example.com
@@ -77,13 +77,13 @@ Dự án backend có hai chế độ chạy chính:
     ```bash
     npm run dev
     ```
-    Server sẽ khởi động và lắng nghe trên cổng được cấu hình trong `.env` (mặc định là 3000).
+    Server sẽ khởi động và lắng nghe trên cổng được cấu hình trong `.env` (mặc định là 5000).
 
 2.  **Chạy ở chế độ sản phẩm (Production Mode):**
     Sử dụng `node` để chạy server. Chế độ này thích hợp cho môi trường triển khai thực tế.
     ```bash
     npm start
     ```
-    Server sẽ khởi động và lắng nghe trên cổng được cấu hình trong `.env` (mặc định là 3000).
+    Server sẽ khởi động và lắng nghe trên cổng được cấu hình trong `.env` (mặc định là 5000).
 
 Sau khi server khởi động thành công, backend của bạn đã sẵn sàng để nhận các yêu cầu API từ frontend.
